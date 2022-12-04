@@ -1,0 +1,67 @@
+specVersion: 0.0.4
+description: SEC-Token is a legislation compliant way to proof and transfer ownership of real estate on the blockchain
+repository: https://github.com/TobyKreiselmaier/Property-Subgraph/
+features:
+  - nonFatalErrors
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: PropertyFactory
+    network: {{network}}
+    source:
+      address: '{{propertyFactoryAddress}}'
+      abi: PropertyFactory
+      startBlock: {{startBlock}} # contract creation
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Market
+        - PropertyEntity
+        - User
+      abis:
+        - name: PropertyFactory
+          file: ./abis/PropertyFactory.json
+      eventHandlers:
+        - event: PropertyCreated(address,string,string,string,indexed address,indexed address,indexed address,uint256,uint256,uint256)
+          handler: handlePropertyCreated
+      file: ./src/mappings/factory.ts
+templates:
+  - kind: ethereum/contract
+    name: Property
+    network: {{network}}
+    source:
+      abi: Property
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Market
+        - Asking
+        - Offering
+        - PropertyEntity
+        - User
+      abis:
+        - name: Property
+          file: ./abis/Property.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: UniswapV2Factory
+          file: ./abis/UniswapV2Factory.json
+        - name: UniswapV2Pair
+          file: ./abis/UniswapV2Pair.json
+      eventHandlers:
+        - event: AskingPriceUpdate(indexed address,uint256)
+          handler: handleAskingPriceUpdated
+        - event: OfferUpdate(indexed address,indexed address,uint256)
+          handler: handleOfferUpdate
+        - event: ClosingTable(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handleClosingTable
+        - event: RoyaltiesPaid(indexed address,indexed address,uint256,bytes32)
+          handler: handleRoyaltiesPaid
+        - event: RoyaltiesSet(indexed address,uint256,bytes32)
+          handler: handleRoyaltiesSet
+      file: ./src/mappings/property.ts

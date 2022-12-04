@@ -1,0 +1,104 @@
+# Allows for fulltext search queries on the indicated fields
+type _Schema_
+  @fulltext(
+    name: "propertySearch"
+    language: en
+    algorithm: rank
+    include: [{ entity: "Property", fields: [{ name: "streetName" }, { name: "legalDescription" }, { name: "documentationURI" }] }]
+  )
+
+# Tracks general data
+type Market @entity {
+
+  id: Bytes!
+
+  propertyOwnersCount: BigInt
+  usersCount: BigInt
+  propertiesCount: BigInt
+  transfersCount: BigInt
+  transferVolumeUSD: BigDecimal
+  ownerRoyaltiesDistributedUSD: BigDecimal
+  brokerRoyaltiesDistributedUSD: BigDecimal
+  providerRoyaltiesDistributedUSD: BigDecimal
+  subgraphVersion: String!
+}
+
+# Tracking property specific data
+type PropertyEntity @entity {
+
+  id: Bytes! # PropertyAddress
+
+  streetAddress: String
+  legalDescription: String
+  documentationURI: String
+  owner: User
+  broker: Bytes
+  transferAgent: Bytes
+  ownerRoyaltiesBps: BigInt
+  brokerRoyaltiesBps: BigInt
+  providerRoyaltiesBps: BigInt
+  askings: [Asking!]
+  offerings: [Offering!]
+  ownerRoyaltiesDistributedUSD: BigDecimal
+  brokerRoyaltiesDistributedUSD: BigDecimal
+  providerRoyaltiesDistributedUSD: BigDecimal
+
+  # last updated
+  txHash: Bytes!
+  timestamp: BigInt!
+
+  createdAtTimestamp: BigInt!
+  createdAtBlockNumber: BigInt!
+}
+
+type Asking @entity {
+
+  id: Bytes!
+
+  property: PropertyEntity!
+  owner: User!
+  tokenAddress: Bytes!
+  value: BigInt!
+
+  # last updated
+  txHash: Bytes!
+  timestamp: BigInt!
+}
+
+type Offering @entity {
+
+  id: Bytes!
+
+  property: PropertyEntity!
+  bidder: User!
+  tokenAddress: Bytes!
+  value: BigInt!
+
+  # last updated
+  txHash: Bytes!
+  timestamp: BigInt!
+}
+
+# Tracking property specific data
+type User @entity {
+
+  id: Bytes! # EOA
+
+  propertiesOwned: [PropertyEntity!]
+  ownerTransfersCount: BigInt
+  ownerTransferVolumeUSD: BigDecimal
+  ownerRoyaltiesVolumeUSD: BigDecimal
+  buyerPaidVolumeUSD: BigDecimal
+  brokerTransfersCount: BigInt
+  brokerTransferVolumeUSD: BigDecimal
+  brokerRoyaltiesVolumeUSD: BigDecimal
+  agentTransfersCount: BigInt
+  agentTransferVolumeUSD: BigDecimal
+
+  # last updated
+  txHash: Bytes!
+  timestamp: BigInt!
+
+  createdAtTimestamp: BigInt!
+  createdAtBlockNumber: BigInt!
+}

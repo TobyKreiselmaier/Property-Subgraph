@@ -1,0 +1,50 @@
+{
+  "name": "property-subgraph",
+  "version": "0.1.0",
+  "description": "Subgraph for SEC compliant Property Contracts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TobyKreiselmaier/Property-Subgraph.git"
+  },
+  "bugs": "https://github.com/TobyKreiselmaier/Property-Subgraph/-/issues",
+  "author": "KeyLynx Team",
+  "license": "MIT",
+  "scripts": {
+    "build": "rm -rf ./build && graph build",
+    "codegen": "rm -rf ./generated && graph codegen",
+    "create-local": "dotenv -e .env.local -- cross-var graph create --node %GRAPH_NODE_URL% %SUBGRAPH_NAME%",
+    "create": "dotenv -e .env -- cross-var graph create --node %GRAPH_NODE_URL%/deploy/ %SUBGRAPH_NAME%",
+    "deploy-local": "dotenv -e .env.local -- cross-var graph deploy --debug --ipfs %IPFS_NODE_URL% --node %GRAPH_NODE_URL% %SUBGRAPH_NAME%",
+    "deploy": "dotenv -e .env -- cross-var graph deploy --node %GRAPH_NODE_URL%/deploy/ --ipfs %IPFS_NODE_URL% %SUBGRAPH_NAME%",
+    "doall-local": "yarn && yarn codegen && yarn create-local && yarn deploy-local",
+    "doall": "yarn && yarn codegen && yarn run create && yarn deploy",
+    "lint-fix": "eslint . --fix",
+    "lint": "yarn eslint .",
+    "prepare-ethereum": "mustache ./config/ethereum.json subgraph.template.yaml > subgraph.yaml",
+    "prepare-goerli": "mustache ./config/goerli.json subgraph.template.yaml > subgraph.yaml",
+    "prettier": "prettier --write .",
+    "remove-local": "dotenv -e .env.local -- cross-var graph remove --debug --ipfs %IPFS_NODE_URL% --node %GRAPH_NODE_URL% %SUBGRAPH_NAME%",
+    "remove": "dotenv -e .env -- cross-var graph remove --debug --ipfs %IPFS_NODE_URL% --node %GRAPH_NODE_URL% %SUBGRAPH_NAME%",
+    "test": "yarn && yarn codegen && graph test",
+    "watch-local": "dotenv -e .env.local -- cross-var graph deploy --watch --debug --node %GRAPH_NODE_URL% --ipfs %IPFS_NODE_URL% %SUBGRAPH_NAME%",
+    "watch": "dotenv -e .env -- cross-var graph deploy --watch --debug --node %GRAPH_NODE_URL% --ipfs %IPFS_NODE_URL% %SUBGRAPH_NAME%"
+  },
+  "devDependencies": {
+    "@graphprotocol/graph-cli": "0.37.0",
+    "@graphprotocol/graph-ts": "0.29.0",
+    "@typescript-eslint/eslint-plugin": "5.45.0",
+    "@typescript-eslint/parser": "5.45.0",
+    "cross-var": "1.1.0",
+    "dotenv-cli": "6.0.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint": "8.28.0",
+    "matchstick-as": "0.5.0",
+    "mustache": "4.2.0",
+    "prettier": "2.8.0",
+    "typescript": "4.9.3"
+  },
+  "engines": {
+    "node": ">=16",
+    "yarn": ">=1.22"
+  }
+}
