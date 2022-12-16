@@ -6,7 +6,7 @@ This subgraph dynamically watches any property created by the `PropertyFactory`.
 
 - node v16+
 - yarn v1.22+
-- graph-node v0.28.2
+- graph-node v0.29.0
 
 ## Manifest
 

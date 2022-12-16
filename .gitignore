@@ -2,6 +2,7 @@
 .DS_STORE
 .latest.json
 build/
+data/
 generated/
 node_modules/
 subgraph.yaml

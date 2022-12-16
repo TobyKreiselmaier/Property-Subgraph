@@ -3,6 +3,7 @@ description: SEC-Token is a legislation compliant way to proof and transfer owne
 repository: https://github.com/TobyKreiselmaier/Property-Subgraph/
 features:
   - nonFatalErrors
+  - fullTextSearch
 schema:
   file: ./schema.graphql
 dataSources:

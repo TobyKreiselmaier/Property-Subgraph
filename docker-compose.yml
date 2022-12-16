@@ -1,7 +1,7 @@
 version: '3'
 services:
   graph-node:
-    image: graphprotocol/graph-node:7b4228c
+    image: graphprotocol/graph-node:latest
     ports:
       - '8000:8000'
       - '8001:8001'
@@ -19,7 +19,7 @@ services:
       postgres_pass: let-me-in
       postgres_db: graph-node
       ipfs: 'ipfs:5001'
-      ethereum: 'goerli:https://eth-goerli.g.alchemy.com/v2/5rd1W6ee5WcgfxO7dfLMuV4nKdjyXN9U'
+      ethereum: 'goerli:https://goerli.infura.io/v3/782829b3c36a470fac8ad2da2286d41f'
       GRAPH_LOG: info
   ipfs:
     image: ipfs/go-ipfs:latest
@@ -36,5 +36,7 @@ services:
       POSTGRES_USER: graph-node
       POSTGRES_PASSWORD: let-me-in
       POSTGRES_DB: graph-node
+      PGDATA: "/var/lib/postgresql/data"
+      POSTGRES_INITDB_ARGS: "-E UTF8 --locale=C"
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
