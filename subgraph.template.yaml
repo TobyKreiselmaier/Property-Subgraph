@@ -3,7 +3,6 @@ description: SEC-Token is a legislation compliant way to proof and transfer owne
 repository: https://github.com/TobyKreiselmaier/Property-Subgraph/
 features:
   - nonFatalErrors
-  - fullTextSearch
 schema:
   file: ./schema.graphql
 dataSources:
@@ -13,7 +12,7 @@ dataSources:
     source:
       address: '{{propertyFactoryAddress}}'
       abi: PropertyFactory
-      startBlock: {{startBlock}} # contract creation
+      startBlock: {{startBlock}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6

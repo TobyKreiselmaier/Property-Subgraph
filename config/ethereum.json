@@ -1,5 +1,5 @@
 {
-  "network": "mainnet",
+  "network": "ethereum",
   "propertyFactoryAddress": "0x0000000000000000000000000000000000000000",
-  "startBlock": "0"
+  "startBlock": "15000000"
 }

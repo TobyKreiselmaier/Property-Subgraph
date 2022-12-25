@@ -1,11 +1,4 @@
 # Allows for fulltext search queries on the indicated fields
-type _Schema_
-  @fulltext(
-    name: "propertySearch"
-    language: en
-    algorithm: rank
-    include: [{ entity: "Property", fields: [{ name: "streetName" }, { name: "legalDescription" }, { name: "documentationURI" }] }]
-  )
 
 # Tracks general data
 type Market @entity {
