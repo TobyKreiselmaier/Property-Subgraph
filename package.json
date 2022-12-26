@@ -19,7 +19,7 @@
     "doall-local": "yarn; yarn codegen; yarn create-local; yarn deploy-local",
     "doall": "yarn; yarn codegen; yarn run create; yarn deploy",
     "graph-node-up": "kill -9 $(lsof -t -i:5432); docker-compose up > /dev/null",
-    "graph-node-down": "docker-compose down > /dev/null; rm -rf ./data",
+    "graph-node-down": "kill -9 $(lsof -t -i:5432); docker-compose down > /dev/null; rm -rf ./data",
     "lint-fix": "eslint . --fix",
     "lint": "yarn eslint .",
     "prepare-ethereum": "mustache ./config/ethereum.json subgraph.template.yaml > subgraph.yaml",
@@ -27,9 +27,7 @@
     "prettier": "prettier --write .",
     "remove-local": "dotenv -e .env.local -- cross-var graph remove --debug --ipfs %IPFS_NODE_URL% --node %GRAPH_NODE_URL% %SUBGRAPH_NAME%",
     "remove": "dotenv -e .env -- cross-var graph remove --debug --ipfs %IPFS_NODE_URL% --node %GRAPH_NODE_URL% %SUBGRAPH_NAME%",
-    "test": "yarn; yarn codegen; graph test",
-    "watch-local": "dotenv -e .env.local -- cross-var graph deploy --watch --debug --node %GRAPH_NODE_URL% --ipfs %IPFS_NODE_URL% %SUBGRAPH_NAME%",
-    "watch": "dotenv -e .env -- cross-var graph deploy --watch --debug --node %GRAPH_NODE_URL% --ipfs %IPFS_NODE_URL% %SUBGRAPH_NAME%"
+    "test": "yarn; yarn codegen; graph test"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "0.37.1",
